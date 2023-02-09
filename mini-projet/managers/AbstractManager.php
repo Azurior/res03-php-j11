@@ -3,26 +3,24 @@
 abstract class AbstractManager{
     
     protected PDO $db;
-    private string $dbName;
-    private string $port;
-    private string $host;
-    private string $username;
-    private string $password;
+    protected string $dbName;
+    protected string $port;
+    protected string $host;
+    protected string $username;
+    protected string $password;
     
-    public function __construct(string $dbName, string $port, string $host, string $username, string $password)
+    
+    
+    protected function initDb() : PDO
     {
-        $this->dbName = $dbName;
-        $this->port = $port;
-        $this->host = $host;
-        $this->username = $username;
-        $this->password = $password;
+        
         $this->db = new PDO(
-                        $host,
-                        $port,
-                        $dbName,
+                        "mysql:host=$host;port=$port;dbname=$dbname",
                         $user,
                         $password
                     );
+        
+        
     }
 }
 

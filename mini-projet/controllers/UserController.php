@@ -14,39 +14,44 @@ class UserController extends AbstractController{
     
     public function index() : void
     {
-        
-        render('index', $this->manager->getAllUsers());
+        $userManager = new UserManager('tonygohin_phpj11', '3306', 'db.3wa.io', 'tonygohin', 'f80620de30f1b8d1caba3a7e4b950a9a');
+        $userManager->initDb();
+        $this->render('index', ['users' => $userManager->getAllUsers()]);
         
     }
     
     public function create(array $post) : array
     {
         
+        $userManager = new UserManager('tonygohin_phpj11', '3306', 'db.3wa.io', 'tonygohin', 'f80620de30f1b8d1caba3a7e4b950a9a');
+        $userManager->initDb();
         foreach($post as $value){
             
             $hash_password = password_hash($value['password'], PASSWORD_DEFAULT);
             $newUser = new User($value['firstName'], $value['lastName'], $value['email'], $hash_password);
-            $this->manager->insertUser($newUser);
+            $userManager->insertUser($newUser);
         }
         
-        render('create', []);
+        $this->render('create', []);
 
     }
     
     public function edit(array $post) : array
     {
      
+        $userManager = new UserManager('tonygohin_phpj11', '3306', 'db.3wa.io', 'tonygohin', 'f80620de30f1b8d1caba3a7e4b950a9a');
+        $userManager->initDb();
         foreach($post as $value)
         {
             
             $hash_password = password_hash($value['password'], PASSWORD_DEFAULT);
             $newUser = new User($value['firstName'], $value['lastName'], $value['email'], $hash_password);
-            $this->manager->edittUser($newUser); 
+            $userManager->edittUser($newUser); 
             
             
         }
         
-        render('edit', []);
+        $this->render('edit', []);
      
         
     }
